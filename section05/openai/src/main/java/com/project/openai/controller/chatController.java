@@ -11,19 +11,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequestMapping("/api")
 public class chatController {
     // using the default chatClient bean, we should be able to chat with a LLM Model
-    private final ChatClient chatClient;
+    private final ChatClient chat;
 
-    public chatController(ChatClient.Builder chatClientBuilder){
-        this.chatClient = chatClientBuilder.build();
+    public chatController(ChatClient chat){
+        this.chat = chat;
+
     }
 
     @GetMapping("/chat")
     public String chat(@RequestParam("message") String message) {
         // call method is used to take care of invoking llm model
         // content method is used to return a actual content coming from the llm model
-        return chatClient.prompt().system("""
-                    give me only hr related queries
-                """).user(message).call().content();
+        return chat.prompt().system("""
+                You are an internal IT helpdesk assistant. Your role is to help\s
+                employees with questions related to HR policies, such as\s
+                leave policies, working hours, benefits, and code of conduct.
+                If a user asks for help with anything outside of these topics,\s
+                kindly inform them that you can only assist with queries related to\s
+                """)
+                .user(message)
+                .call().content();
     }
     
 }
