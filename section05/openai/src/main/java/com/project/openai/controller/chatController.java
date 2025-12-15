@@ -13,6 +13,7 @@ public class chatController {
     // using the default chatClient bean, we should be able to chat with a LLM Model
     private final ChatClient chat;
 
+    // constructor injection
     public chatController(ChatClient chat){
         this.chat = chat;
 
@@ -34,3 +35,12 @@ public class chatController {
     }
     
 }
+
+
+// 🎯 One-line definition (perfect for interviews)
+
+// @Autowired is used to automatically inject required dependencies into a class.
+
+// Or even simpler:
+
+// @Autowired lets Spring create and connect objects for us.
